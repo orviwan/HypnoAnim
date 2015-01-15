@@ -6,8 +6,6 @@ static const uint32_t timeout_ms = 120;
 
 static int current_frame = 0;
 static Layer *anim_layer;
-static TextLayer *text_layer;
-
 
 #define TOTAL_FRAMES 6 
 static GBitmap *anim_images[TOTAL_FRAMES];
@@ -21,6 +19,9 @@ const int ANIM_IMAGE_RESOURCE_IDS[] = {
   RESOURCE_ID_FRAME_4,
   RESOURCE_ID_FRAME_5
 };
+
+static GBitmap *mask_image;
+static BitmapLayer *mask_layer;
 
 static AppTimer *timer;
 
@@ -56,7 +57,7 @@ static void init(void) {
   anim_layer = layer_create(frame);
   layer_set_update_proc(anim_layer, update_image_layer);
   layer_add_child(window_layer, anim_layer);
-
+	
   for (int i = 0; i < TOTAL_FRAMES; ++i) {
     anim_layers[i] = bitmap_layer_create(frame);
     layer_add_child(anim_layer, bitmap_layer_get_layer(anim_layers[i]));
@@ -65,6 +66,12 @@ static void init(void) {
 		layer_set_hidden(bitmap_layer_get_layer(anim_layers[i]), true);
   }
 	layer_set_hidden(bitmap_layer_get_layer(anim_layers[TOTAL_FRAMES-1]), false);
+	
+  mask_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_WB);
+  mask_layer = bitmap_layer_create(frame);
+	//bitmap_layer_set_compositing_mode(mask_layer, GCompOpOr);
+  bitmap_layer_set_bitmap(mask_layer, mask_image);
+  layer_add_child(window_layer, bitmap_layer_get_layer(mask_layer));
 
   window_stack_push(window, true);
 
@@ -80,6 +87,13 @@ static void deinit(void) {
     anim_layers[i] = NULL;
   }	
   layer_destroy(anim_layer);
+	
+	layer_remove_from_parent(bitmap_layer_get_layer(mask_layer));
+	gbitmap_destroy(mask_image);
+	mask_image = NULL;
+	bitmap_layer_destroy(mask_layer);
+	mask_layer = NULL;
+	
   window_destroy(window);
 }
 

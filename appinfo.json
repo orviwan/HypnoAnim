@@ -9,6 +9,16 @@
     "resources": {
         "media": [
             {
+                "file": "images/wb.png",
+                "name": "IMAGE_WB",
+                "type": "png"
+            },
+            {
+                "file": "images/bw.png",
+                "name": "IMAGE_BW",
+                "type": "png"
+            },
+            {
                 "file": "images/frame_005.png",
                 "name": "FRAME_5",
                 "type": "png"
