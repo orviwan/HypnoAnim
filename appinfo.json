@@ -1,0 +1,50 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Orviwan",
+    "longName": "Hypno",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/frame_005.png",
+                "name": "FRAME_5",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_004.png",
+                "name": "FRAME_4",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_003.png",
+                "name": "FRAME_3",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_002.png",
+                "name": "FRAME_2",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_001.png",
+                "name": "FRAME_1",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_000.png",
+                "name": "FRAME_0",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "Hypno",
+    "uuid": "59f9dde5-b0fc-46b7-b192-35869c734d58",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
