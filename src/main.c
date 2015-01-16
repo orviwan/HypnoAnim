@@ -8,8 +8,8 @@ static int current_frame = 0;
 static Layer *anim_layer;
 
 #define TOTAL_FRAMES 6 
-static GBitmap *anim_images[TOTAL_FRAMES];
-static BitmapLayer *anim_layers[TOTAL_FRAMES];
+BitmapLayer *layer;
+GBitmap *current_image;
 
 const int ANIM_IMAGE_RESOURCE_IDS[] = {
   RESOURCE_ID_FRAME_0,
@@ -26,17 +26,12 @@ static BitmapLayer *mask_layer;
 static AppTimer *timer;
 
 void change_background() {
-	int prev_frame = current_frame-1;
-	if(current_frame == 0) {
-		prev_frame = TOTAL_FRAMES-1;
-	}
+	gbitmap_destroy(current_image);
 	if(current_frame >= TOTAL_FRAMES) {
 		current_frame = 0;
 	}
-
-	layer_set_hidden(bitmap_layer_get_layer(anim_layers[current_frame]), false);
-	layer_set_hidden(bitmap_layer_get_layer(anim_layers[prev_frame]), true);
-
+	current_image = gbitmap_create_with_resource(ANIM_IMAGE_RESOURCE_IDS[current_frame]);
+	bitmap_layer_set_bitmap(layer, current_image);
 	current_frame++;
 }
 
@@ -49,29 +44,35 @@ static void timer_callback(void *context) {
   timer = app_timer_register(timeout_ms, timer_callback, NULL);
 }
 
+void test(struct tm *t, TimeUnits units){
+	APP_LOG(APP_LOG_LEVEL_INFO, "%d free", (int)heap_bytes_free());
+}
+
 static void init(void) {
   window = window_create();
   Layer *window_layer = window_get_root_layer(window);
-  GRect frame = { {0, 0}, {144, 168} };
+  GRect frame = GRect(0, 0, 144, 168);
 	
   anim_layer = layer_create(frame);
   layer_set_update_proc(anim_layer, update_image_layer);
   layer_add_child(window_layer, anim_layer);
 	
-  for (int i = 0; i < TOTAL_FRAMES; ++i) {
-    anim_layers[i] = bitmap_layer_create(frame);
-    layer_add_child(anim_layer, bitmap_layer_get_layer(anim_layers[i]));
-		anim_images[i] = gbitmap_create_with_resource(ANIM_IMAGE_RESOURCE_IDS[i]);
-		bitmap_layer_set_bitmap(anim_layers[i], anim_images[i]);
-		layer_set_hidden(bitmap_layer_get_layer(anim_layers[i]), true);
-  }
-	layer_set_hidden(bitmap_layer_get_layer(anim_layers[TOTAL_FRAMES-1]), false);
+  layer = bitmap_layer_create(frame);
+  layer_add_child(anim_layer, bitmap_layer_get_layer(layer));
+	
+  APP_LOG(APP_LOG_LEVEL_INFO, "%d free", (int)heap_bytes_free());
 	
   mask_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_WB);
   mask_layer = bitmap_layer_create(frame);
-	//bitmap_layer_set_compositing_mode(mask_layer, GCompOpOr);
+  bitmap_layer_set_compositing_mode(mask_layer, GCompOpOr);
   bitmap_layer_set_bitmap(mask_layer, mask_image);
   layer_add_child(window_layer, bitmap_layer_get_layer(mask_layer));
+	
+  APP_LOG(APP_LOG_LEVEL_INFO, "%d free", (int)heap_bytes_free());
+
+  APP_LOG(APP_LOG_LEVEL_INFO, "%d for resource", sizeof(mask_image));
+
+  tick_timer_service_subscribe(SECOND_UNIT, test);
 
   window_stack_push(window, true);
 
@@ -79,26 +80,11 @@ static void init(void) {
 }
 
 static void deinit(void) {
-  for (int i = 0; i < TOTAL_FRAMES; i++) {
-    layer_remove_from_parent(bitmap_layer_get_layer(anim_layers[i]));
-    gbitmap_destroy(anim_images[i]);
-    anim_images[i] = NULL;
-    bitmap_layer_destroy(anim_layers[i]);
-    anim_layers[i] = NULL;
-  }	
-  layer_destroy(anim_layer);
-	
-	layer_remove_from_parent(bitmap_layer_get_layer(mask_layer));
-	gbitmap_destroy(mask_image);
-	mask_image = NULL;
-	bitmap_layer_destroy(mask_layer);
-	mask_layer = NULL;
-	
-  window_destroy(window);
+  
 }
 
 int main(void) {
   init();
   app_event_loop();
-  deinit();
+  //deinit();
 }
