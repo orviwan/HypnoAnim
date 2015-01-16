@@ -9,33 +9,58 @@
     "resources": {
         "media": [
             {
-                "file": "images/wb.png",
-                "name": "IMAGE_WB",
+                "file": "images/block_9.png",
+                "name": "BLOCK_9",
                 "type": "png"
             },
             {
-                "file": "images/bw.png",
-                "name": "IMAGE_BW",
+                "file": "images/block_8.png",
+                "name": "BLOCK_8",
                 "type": "png"
             },
             {
-                "file": "images/frame_005.png",
-                "name": "FRAME_5",
+                "file": "images/block_7.png",
+                "name": "BLOCK_7",
                 "type": "png"
             },
             {
-                "file": "images/frame_004.png",
-                "name": "FRAME_4",
+                "file": "images/block_6.png",
+                "name": "BLOCK_6",
                 "type": "png"
             },
             {
-                "file": "images/frame_003.png",
-                "name": "FRAME_3",
+                "file": "images/block_5.png",
+                "name": "BLOCK_5",
                 "type": "png"
             },
             {
-                "file": "images/frame_002.png",
-                "name": "FRAME_2",
+                "file": "images/block_4.png",
+                "name": "BLOCK_4",
+                "type": "png"
+            },
+            {
+                "file": "images/block_3.png",
+                "name": "BLOCK_3",
+                "type": "png"
+            },
+            {
+                "file": "images/block_2.png",
+                "name": "BLOCK_2",
+                "type": "png"
+            },
+            {
+                "file": "images/block_1.png",
+                "name": "BLOCK_1",
+                "type": "png"
+            },
+            {
+                "file": "images/block_0.png",
+                "name": "BLOCK_0",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_000.png",
+                "name": "FRAME_0",
                 "type": "png"
             },
             {
@@ -44,8 +69,33 @@
                 "type": "png"
             },
             {
-                "file": "images/frame_000.png",
-                "name": "FRAME_0",
+                "file": "images/frame_002.png",
+                "name": "FRAME_2",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_003.png",
+                "name": "FRAME_3",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_004.png",
+                "name": "FRAME_4",
+                "type": "png"
+            },
+            {
+                "file": "images/frame_005.png",
+                "name": "FRAME_5",
+                "type": "png"
+            },
+            {
+                "file": "images/bw.png",
+                "name": "IMAGE_BW",
+                "type": "png"
+            },
+            {
+                "file": "images/wb.png",
+                "name": "IMAGE_WB",
                 "type": "png"
             }
         ]
